@@ -1,4 +1,4 @@
-function calculateDiscountPercentage(level: string): number {
+export function calculateDiscountPercentage(level: string): number {
   let discountPercentage: number
   switch (level) {
     case 'standard':
