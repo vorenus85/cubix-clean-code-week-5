@@ -1,8 +1,19 @@
-class School {
-  private classes: SchoolClass[] = []
-  constructor() {}
+export interface ISchoolClass {
+  addStudent(student: Student): void
+  getStudents(): Student[]
+}
 
-  addClass(schoolClass: SchoolClass): void {
+export interface ISchool {
+  addClass(schoolClass: ISchoolClass): void
+  getStudentCount(): number
+}
+
+export class School implements ISchool {
+  constructor(private classes: ISchoolClass[] = []) {
+    this.classes = classes
+  }
+
+  addClass(schoolClass: ISchoolClass): void {
     this.classes.push(schoolClass)
   }
 
@@ -15,10 +26,10 @@ class School {
   }
 }
 
-class SchoolClass {
-  private students: Student[] = []
-
-  constructor() {}
+export class SchoolClass implements ISchoolClass {
+  constructor(private students: Student[] = []) {
+    this.students = students
+  }
 
   addStudent(student: Student): void {
     this.students.push(student)
@@ -28,9 +39,13 @@ class SchoolClass {
   }
 }
 
-class Student {
+export class Student {
   private name: string
   constructor(name: string) {
     this.name = name
+  }
+
+  public getName(): string {
+    return this.name
   }
 }
