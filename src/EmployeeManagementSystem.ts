@@ -1,12 +1,16 @@
-export class EmployeeManagementSystem {
-  constructor(private employees: Employee[] = []) {}
+export interface IEmployee {
+  calculateSalary(): number
+}
 
-  public addEmployee(employee: Employee): void {
+export class EmployeeManagementSystem {
+  constructor(private employees: IEmployee[] = []) {}
+
+  public addEmployee(employee: IEmployee): void {
     // Real-world code to add employee to the system
     this.employees.push(employee)
   }
 
-  public allEmployees(): Employee[] {
+  public allEmployees(): IEmployee[] {
     return this.employees
   }
 
@@ -24,7 +28,7 @@ export class EmployeeManagementSystem {
   }
 }
 
-export class Employee {
+export class Employee implements IEmployee {
   constructor(
     private name: string,
     private salary: number

@@ -1,25 +1,25 @@
 import {
   Employee,
   EmployeeManagementSystem,
+  IEmployee,
 } from '../src/EmployeeManagementSystem'
 import { mock, mockReset } from 'jest-mock-extended'
 
-const mockedEmployee = mock<Employee>()
+const mockedEmployee = mock<IEmployee>()
+
+const employee = new Employee('Joe', 5000)
 
 describe('Test Employee Management System', () => {
   let employeeManagementSystem: EmployeeManagementSystem
 
   beforeEach(() => {
     mockReset(mockedEmployee)
-    employeeManagementSystem = new EmployeeManagementSystem([
-      mockedEmployee,
-      mockedEmployee,
-    ])
+    employeeManagementSystem = new EmployeeManagementSystem([])
   })
 
-  it('should return employees length with 2', () => {
+  it('should return all All Employees', () => {
     // Arrange
-    const expectedEmployees = 2
+    const expectedEmployees = 0
 
     const actualResult = employeeManagementSystem.allEmployees()
 
@@ -31,11 +31,10 @@ describe('Test Employee Management System', () => {
 
   it('should add new employee', () => {
     // Arrange
-    const expectedEmployees = 3
-    const newEmployee = new Employee('Joe', 5000)
+    const expectedEmployees = 1
 
     // Act
-    employeeManagementSystem.addEmployee(newEmployee)
+    employeeManagementSystem.addEmployee(employee)
 
     expect(employeeManagementSystem.allEmployees().length).toBe(
       expectedEmployees
@@ -44,13 +43,14 @@ describe('Test Employee Management System', () => {
 
   it('should calculate payroll', () => {
     // Arrange
-    const expectedResult = 10000
-    const newEmployee = new Employee('Joe', 5000)
-    employeeManagementSystem = new EmployeeManagementSystem([newEmployee])
+    const expectedResult = 5000
+
+    employeeManagementSystem = new EmployeeManagementSystem([])
 
     // Act
-    employeeManagementSystem.addEmployee(newEmployee)
+    employeeManagementSystem.addEmployee(employee)
 
+    // Assert
     expect(employeeManagementSystem.calculatePayroll()).toBe(expectedResult)
   })
 
