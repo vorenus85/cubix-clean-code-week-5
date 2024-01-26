@@ -1,11 +1,8 @@
-class ShoppingCart {
-  private items: CartItem[] = []
+export class ShoppingCart {
+  constructor(private items: ICartItem[] = []) {}
 
-  constructor() {}
-
-  addItem(product: string, price: number): void {
-    const newItem = new CartItem(product, price)
-    this.items.push(newItem)
+  addItem(cartItem: ICartItem) {
+    this.items.push(cartItem)
   }
 
   calculateTotal(): number {
@@ -17,11 +14,16 @@ class ShoppingCart {
   }
 }
 
-class CartItem {
+export class CartItem implements ICartItem {
   public product: string
   public price: number
   constructor(product: string, price: number) {
     this.product = product
     this.price = price
   }
+}
+
+export interface ICartItem {
+  product: string
+  price: number
 }
