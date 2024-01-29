@@ -34,8 +34,8 @@ export class SchoolClass implements ISchoolClass {
   addStudent(student: Student): void {
     this.students.push(student)
   }
-  getStudents(): Student[] {
-    return this.students
+  getStudents(): Student[] | [] {
+    return this.students || []
   }
 }
 
