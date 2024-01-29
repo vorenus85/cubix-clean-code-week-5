@@ -2,8 +2,20 @@ export interface IEmployee {
   calculateSalary(): number
 }
 
+export interface IReporting {
+  generateReports(): string
+}
+
+export interface IPayroll {
+  calculatePayroll(): number
+}
+
 export class EmployeeManagementSystem {
-  constructor(private employees: IEmployee[] = []) {}
+  constructor(
+    private employees: IEmployee[] = [],
+    private reporting: IReporting,
+    private payroll: IPayroll
+  ) {}
 
   public addEmployee(employee: IEmployee): void {
     // Real-world code to add employee to the system
@@ -15,6 +27,17 @@ export class EmployeeManagementSystem {
   }
 
   public calculatePayroll(): number {
+    return this.payroll.calculatePayroll()
+  }
+  public generateReports(): string {
+    return this.reporting.generateReports()
+  }
+}
+
+export class Payroll implements IPayroll {
+  constructor(private employees: IEmployee[] = []) {}
+
+  public calculatePayroll(): number {
     // Simulation to calculate payroll for all employees
     let totalPayroll = 0
     for (const employee of this.employees) {
@@ -22,6 +45,10 @@ export class EmployeeManagementSystem {
     }
     return totalPayroll
   }
+}
+export class Reporting implements IReporting {
+  constructor() {}
+
   public generateReports(): string {
     // Simulation to generate various reports
     return 'Employee reports: ...'

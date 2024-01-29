@@ -2,10 +2,16 @@ import {
   Employee,
   EmployeeManagementSystem,
   IEmployee,
+  IPayroll,
+  IReporting,
+  Payroll,
+  Reporting,
 } from '../src/EmployeeManagementSystem'
 import { mock, mockReset } from 'jest-mock-extended'
 
 const mockedEmployee = mock<IEmployee>()
+const mockedReporting = mock<IReporting>()
+const mockedPayroll = mock<IPayroll>()
 
 const employee = new Employee('Joe', 5000)
 
@@ -14,7 +20,13 @@ describe('Test Employee Management System', () => {
 
   beforeEach(() => {
     mockReset(mockedEmployee)
-    employeeManagementSystem = new EmployeeManagementSystem([])
+    mockReset(mockedReporting)
+    mockReset(mockedPayroll)
+    employeeManagementSystem = new EmployeeManagementSystem(
+      [],
+      mockedReporting,
+      mockedPayroll
+    )
   })
 
   it('should return all All Employees', () => {
@@ -45,8 +57,6 @@ describe('Test Employee Management System', () => {
     // Arrange
     const expectedResult = 5000
 
-    employeeManagementSystem = new EmployeeManagementSystem([])
-
     // Act
     employeeManagementSystem.addEmployee(employee)
 
@@ -60,6 +70,40 @@ describe('Test Employee Management System', () => {
 
     // Assert
     expect(employeeManagementSystem.generateReports()).toBe(expectedResult)
+  })
+})
+
+describe('Payroll tests', () => {
+  let payroll: IPayroll
+
+  beforeEach(() => {
+    mockReset(mockedEmployee)
+    payroll = new Payroll([employee])
+  })
+
+  it('should calculate payroll', () => {
+    // Arrange
+    const expectedResult = 5000
+
+    // Act
+
+    // Assert
+    expect(payroll.calculatePayroll()).toBe(expectedResult)
+  })
+})
+
+describe('Reporting tests', () => {
+  let reporting: IReporting
+  it('should generate reports', () => {
+    // Arrange
+    const expectedResult = 'Employee reports: ...'
+    reporting = new Reporting()
+
+    // Act
+    const actualResult = reporting.generateReports()
+
+    // Assert
+    expect(actualResult).toBe(expectedResult)
   })
 })
 
