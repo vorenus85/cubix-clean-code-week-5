@@ -27,18 +27,16 @@ describe('calculate discount percentage', () => {
       ${'asd'}
       ${''}
     `(
-      'at $discountLevel discount level should throw error because discount level not exist',
+      'at $discountLevel discount level should return 0 discount',
       ({ discountLevel }) => {
+        // Arrange
+        const expectedDiscount = 0
+
         // Act
-        const errorMessage =
-          'Invalid discount level, discount level not defined'
-        const errorExpected = new Error(errorMessage)
+        const actualResult = calculateDiscountPercentage(discountLevel)
 
         // Assert
-        // Act and Assert
-        expect(() => calculateDiscountPercentage(discountLevel)).toThrow(
-          errorExpected
-        )
+        expect(actualResult).toBe(expectedDiscount)
       }
     )
   })
